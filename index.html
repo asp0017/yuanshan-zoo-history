@@ -3,106 +3,101 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>縱觀圓山動物園歷史</title>
-  <link rel="stylesheet" href="./style.css" />
+
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  
+  <link rel="stylesheet" href="./style.css" />
 </head>
+
 <body>
-  <main class="site">
 
-    <!-- 首頁 -->
-    <section class="hero" id="home">
-      <div class="hero-overlay"></div>
+  <!-- 首頁 -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <p class="hero-year">1914－1986</p>
 
-      <div class="hero-content">
-        <p class="hero-years">1914－1986</p>
-        <h1>消失的圓山動物園</h1>
-        <p class="hero-text">
-          臺北曾經有一座動物園。它存在了七十多年，
-          見證了殖民、戰爭、重建、娛樂文化與現代保育觀念的轉變。
-        </p>
+      <h1>消失的圓山動物園</h1>
 
-        <button id="startBtn" class="start-btn">
-          開始探索
-        </button>
+      <p class="hero-text">
+        臺北曾經有一座動物園。它存在了七十多年，
+        見證殖民、戰爭、重建、娛樂文化與現代保育觀念的轉變。
+        沿著園區地圖，重新走過圓山動物園的歷史。
+      </p>
+
+      <a href="#explore" class="start-btn">
+        開始探索
+      </a>
+    </div>
+  </section>
+
+  <!-- 互動地圖區 -->
+  <main class="layout" id="explore">
+
+    <!-- 左側年代軸 -->
+    <aside class="timeline">
+      <div class="site-title">
+        <span>1914－1986</span>
+        <h1>圓山動物園</h1>
       </div>
+
+      <button class="era-btn active" data-era="era1914">
+        <strong>1914</strong>
+        <span>創立</span>
+      </button>
+
+      <button class="era-btn" data-era="era1921">
+        <strong>1921</strong>
+        <span>全盛</span>
+      </button>
+
+      <button class="era-btn" data-era="era1937">
+        <strong>1937</strong>
+        <span>戰爭</span>
+      </button>
+
+      <button class="era-btn" data-era="era1946">
+        <strong>1946</strong>
+        <span>重生</span>
+      </button>
+
+      <button class="era-btn" data-era="era1970">
+        <strong>1970</strong>
+        <span>轉型</span>
+      </button>
+
+      <button class="era-btn" data-era="era1986">
+        <strong>1986</strong>
+        <span>告別</span>
+      </button>
+    </aside>
+
+    <!-- 中間地圖 -->
+    <section class="map-area">
+      <div id="imageMap"></div>
+      <p class="map-hint">
+        可拖曳、縮放地圖，點擊標記查看事件。
+      </p>
     </section>
 
-    <!-- 主要內容 -->
-    <section class="timeline-section" id="timeline">
+    <!-- 右側故事 -->
+    <section class="story-panel">
+      <p id="eraPeriod" class="period">1914－1920</p>
 
-      <!-- 左側年代軸 -->
-      <aside class="timeline-nav">
-        <p class="timeline-label">Timeline</p>
+      <h2 id="eraTitle">
+        創立與官營化時期
+      </h2>
 
-        <button class="era-btn active" data-era="era1914">
-          <span class="era-year">1914</span>
-          <span class="era-name">創立</span>
-        </button>
+      <p id="eraSummary" class="summary">
+        圓山動物園最初由日本民間人士大江氏創立，後由臺北廳收購並轉為官營，
+        成為臺北現代動物園歷史的起點。
+      </p>
 
-        <button class="era-btn" data-era="era1921">
-          <span class="era-year">1921</span>
-          <span class="era-name">全盛</span>
-        </button>
-
-        <button class="era-btn" data-era="era1937">
-          <span class="era-year">1937</span>
-          <span class="era-name">戰爭</span>
-        </button>
-
-        <button class="era-btn" data-era="era1946">
-          <span class="era-year">1946</span>
-          <span class="era-name">重生</span>
-        </button>
-
-        <button class="era-btn" data-era="era1970">
-          <span class="era-year">1970</span>
-          <span class="era-name">轉型</span>
-        </button>
-
-        <button class="era-btn" data-era="era1986">
-          <span class="era-year">1986</span>
-          <span class="era-name">告別</span>
-        </button>
-      </aside>
-
-      <!-- 右側展示內容 -->
-      <section class="content-area">
-
-        <div class="image-panel">
-          <div id="imageMap"></div>
-        </div>
-
-        <div class="story-panel">
-          <p id="eraPeriod" class="era-period">1914－1920</p>
-
-          <h2 id="eraTitle">
-            創立與官營化時期
-          </h2>
-
-          <p id="eraSummary" class="era-summary">
-            圓山動物園最初由日本民間人士大江氏創立，後由臺北廳收購並轉為官營，
-            成為臺北現代動物園歷史的起點。
-          </p>
-
-          <div id="eraCards" class="cards">
-            <article class="card">
-              <h3>私人動物園的開始</h3>
-              <p>1914 年，大江氏於圓山公園開設私營動物園。</p>
-            </article>
-
-            <article class="card">
-              <h3>轉為官營</h3>
-              <p>1915 年臺北廳收購，1916 年正式以公設動物園名義開放。</p>
-            </article>
-          </div>
-        </div>
-
-      </section>
+      <div id="eraCards" class="cards"></div>
     </section>
 
   </main>
+
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="./data.js"></script>
   <script src="./main.js"></script>

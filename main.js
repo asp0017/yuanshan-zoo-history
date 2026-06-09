@@ -1,50 +1,97 @@
-// 圓山動物園舊址附近
-const yuanshan = [25.0715, 121.5225];
+let map;
+let imageOverlay;
+let markers = [];
 
-const map = L.map("imageMap", {
-  center: yuanshan,
-  zoom: 15,
-  minZoom: 10,
-  maxZoom: 18,
-  zoomControl: true
+const imageBounds = [
+  [0, 0],
+  [900, 1200]
+];
+
+function initMap() {
+  map = L.map("imageMap", {
+    crs: L.CRS.Simple,
+    minZoom: -1,
+    maxZoom: 2,
+    zoomControl: true
+  });
+
+  map.fitBounds(imageBounds);
+  updateEra("era1914");
+  map.on("click", function (e) {
+  console.log("coord:", [Math.round(e.latlng.lat), Math.round(e.latlng.lng)]);
 });
-
-function sinicaLayer(layerId, format = "image/jpeg") {
-  return L.tileLayer(
-    `https://gis.sinica.edu.tw/tileserver/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=${layerId}&STYLE=_null&TILEMATRIXSET=GoogleMapsCompatible&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=${format}`,
-    {
-      attribution: "地圖來源：中央研究院臺灣百年歷史地圖",
-      minZoom: 10,
-      maxZoom: 18,
-      tileSize: 256
-    }
-  );
 }
 
-// 先用比較確定的圖層
-const baseLayers = {
-  "1921 日治臺灣堡圖": sinicaLayer("JM20K_1921", "image/jpeg"),
-  "1944 美軍地形圖": sinicaLayer("AM25K_1944A", "image/jpeg"),
-  "1957-1969 臺灣地形圖": sinicaLayer("TM25K_1966", "image/jpeg"),
-  "現代 OpenStreetMap": L.tileLayer(
-    "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-    {
-      attribution: "&copy; OpenStreetMap contributors"
-    }
-  )
-};
+function clearMap() {
+  if (imageOverlay) {
+    map.removeLayer(imageOverlay);
+  }
 
-// 先載入 OSM，確認座標與地圖本身正常
-baseLayers["現代 OpenStreetMap"].addTo(map);
+  markers.forEach(marker => {
+    map.removeLayer(marker);
+  });
 
-L.control.layers(baseLayers, null, {
-  collapsed: false
-}).addTo(map);
+  markers = [];
+}
 
-L.marker(yuanshan)
-  .addTo(map)
-  .bindPopup(`
-    <h3>圓山動物園舊址</h3>
-    <p>1914－1986 年間，臺北市立動物園位於圓山一帶。</p>
-  `)
-  .openPopup();
+function updateEra(eraKey) {
+  const era = window.eraData[eraKey];
+
+  clearMap();
+
+  imageOverlay = L.imageOverlay(era.image, imageBounds).addTo(map);
+  map.fitBounds(imageBounds);
+
+  era.points.forEach(point => {
+    const marker = L.marker(point.coord)
+      .addTo(map)
+      .bindPopup(`
+        <h3>${point.name}</h3>
+        <p>${point.text}</p>
+      `);
+
+    markers.push(marker);
+  });
+
+  document.getElementById("eraPeriod").textContent = era.period;
+  document.getElementById("eraTitle").textContent = era.title;
+  document.getElementById("eraSummary").textContent = era.summary;
+
+  const cards = document.getElementById("eraCards");
+  cards.innerHTML = "";
+
+  era.cards.forEach(card => {
+    cards.innerHTML += `
+  <article class="card">
+    ${card.image ? `<img class="card-img" src="${card.image}" alt="${card.title}">` : ""}
+    <h3>${card.title}</h3>
+    <p>${card.text}</p>
+  </article>
+`;
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  initMap();
+
+  document.querySelectorAll(".era-btn").forEach(button => {
+    button.addEventListener("click", () => {
+      document.querySelectorAll(".era-btn").forEach(btn => {
+        btn.classList.remove("active");
+      });
+
+      button.classList.add("active");
+
+      updateEra(button.dataset.era);
+    });
+  });
+
+  const startBtn = document.getElementById("startBtn");
+  if (startBtn) {
+    startBtn.addEventListener("click", () => {
+      document.getElementById("explore").scrollIntoView({
+        behavior: "smooth"
+      });
+    });
+  }
+});
