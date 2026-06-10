@@ -276,6 +276,7 @@ body {
     width: 100%;
   }
 }
+
 .card-img {
   width: 100%;
   max-height: 140px;
@@ -382,6 +383,69 @@ body {
   max-height: 78vh;
   object-fit: contain;
   display: block;
+}
+
+.modal-close {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.popup-img {
+  width: 180px;
+  max-height: 130px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  cursor: zoom-in;
+}
+
+.card-img {
+  width: 100%;
+  max-height: 140px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  cursor: zoom-in;
+}
+
+.image-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.image-modal-content {
+  max-width: 90vw;
+  max-height: 90vh;
+  background: white;
+  border-radius: 16px;
+  padding: 16px;
+  position: relative;
+}
+
+.image-modal-content img {
+  max-width: 100%;
+  max-height: 78vh;
+  object-fit: contain;
+  display: block;
+}
+
+.image-modal-content p {
+  margin: 10px 0 0;
+  text-align: center;
+  font-weight: 600;
 }
 
 .modal-close {

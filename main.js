@@ -3,10 +3,10 @@ let imageOverlay;
 let markers = [];
 let currentMode = null;
 
-const imageBounds = [
-  [0, 0],
-  [900, 1200]
-];
+const baseImageSize = {
+  width: 1200,
+  height: 900
+};
 
 function clearMapInstance() {
   if (map) {
@@ -24,12 +24,38 @@ function createImageMap() {
     crs: L.CRS.Simple,
     minZoom: -1,
     maxZoom: 3,
-    zoomControl: true,
-    maxBounds: imageBounds,
-    maxBoundsViscosity: 0.4
+    zoomControl: true
   });
 
   currentMode = "image";
+
+  map.on("click", function (e) {
+    console.log("coord:", [
+      Math.round(e.latlng.lat),
+      Math.round(e.latlng.lng)
+    ]);
+  });
+}
+
+function getImageSize(era) {
+  if (era.imageSize && era.imageSize.length === 2) {
+    return {
+      width: era.imageSize[1],
+      height: era.imageSize[0]
+    };
+  }
+
+  return {
+    width: baseImageSize.width,
+    height: baseImageSize.height
+  };
+}
+
+function scalePointCoord(coord, imageSize) {
+  return [
+    (coord[0] * imageSize.height) / baseImageSize.height,
+    (coord[1] * imageSize.width) / baseImageSize.width
+  ];
 }
 
 function createOSMMap() {
@@ -72,11 +98,13 @@ function openImageModal(src, title) {
 }
 
 function buildPopup(point) {
+  const imageTitle = point.imageTitle || point.name;
+
   return `
     <div class="map-popup">
       ${
         point.image
-          ? `<img class="popup-img" src="${point.image}" alt="${point.name}" onclick="openImageModal('${point.image}', '${point.name}')">`
+          ? `<img class="popup-img" src="${point.image}" alt="${imageTitle}" onclick="openImageModal('${point.image}', '${imageTitle}')">`
           : ""
       }
       <h3>${point.name}</h3>
@@ -100,7 +128,6 @@ function updateEra(eraKey) {
       const marker = L.marker(point.coord)
         .addTo(map)
         .bindPopup(buildPopup(point));
-
       markers.push(marker);
     });
 
@@ -117,22 +144,22 @@ function updateEra(eraKey) {
     markers.forEach(marker => map.removeLayer(marker));
     markers = [];
 
-    imageOverlay = L.imageOverlay(era.image, imageBounds).addTo(map);
-    map.fitBounds(imageBounds);
+    const imageSize = getImageSize(era);
+    const bounds = [
+      [0, 0],
+      [imageSize.height, imageSize.width]
+    ];
+
+    imageOverlay = L.imageOverlay(era.image, bounds).addTo(map);
+    map.fitBounds(bounds);
+    map.setMaxBounds(bounds);
 
     era.points.forEach(point => {
-      const marker = L.marker(point.coord)
+      const coord = scalePointCoord(point.coord, imageSize);
+      const marker = L.marker(coord)
         .addTo(map)
         .bindPopup(buildPopup(point));
-
       markers.push(marker);
-    });
-
-    map.on("click", function (e) {
-      console.log("coord:", [
-        Math.round(e.latlng.lat),
-        Math.round(e.latlng.lng)
-      ]);
     });
   }
 
@@ -144,11 +171,13 @@ function updateEra(eraKey) {
   cards.innerHTML = "";
 
   era.cards.forEach(card => {
+    const imageTitle = card.imageTitle || card.title;
+
     cards.innerHTML += `
       <article class="card">
         ${
           card.image
-            ? `<img class="card-img" src="${card.image}" alt="${card.title}" onclick="openImageModal('${card.image}', '${card.title}')">`
+            ? `<img class="card-img" src="${card.image}" alt="${imageTitle}" onclick="openImageModal('${card.image}', '${imageTitle}')">`
             : ""
         }
         <h3>${card.title}</h3>
