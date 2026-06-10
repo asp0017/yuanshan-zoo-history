@@ -63,7 +63,7 @@ const eraData = {
       },
       {
         name: "臺灣特有物種展示",
-        coord: [345, 880],
+        coord: [587, 744],
         text:
           "日治時期園內曾展示臺灣雲豹等臺灣特有物種。今日臺灣雲豹已在野外絕跡，相關標本與圖像成為重要歷史紀錄。",
         image: "./images/研究資料.png",
@@ -71,7 +71,7 @@ const eraData = {
       },
       {
         name: "大眾娛樂區",
-        coord: [540, 900],
+        coord: [569, 416],
         text:
           "1930 年代開始，圓山動物園固定舉辦夜間開園、慰靈祭、動物表演、主題展覽、兒童節活動、動物命名活動與攝影比賽。",
         image: "./images/報紙.png",
@@ -79,7 +79,7 @@ const eraData = {
       },
       {
         name: "兒童遊園地",
-        coord: [560, 780],
+        coord: [809, 922],
         text:
           "1934 年，台北圓山兒童遊園地開幕，園內設有溜滑梯、盪鞦韆和迴轉塔等遊樂設施。",
         image: "./images/兒童園.png",
@@ -141,7 +141,7 @@ const eraData = {
     points: [
       {
         name: "猛獸區",
-        coord: [340, 930],
+        coord: [587, 744],
         text:
           "1943 年 12 月，因空襲威脅，臺北市役所下令執行「猛獸處分」，處分獅、虎、豹、熊、棕熊、猩猩等大型危險動物。",
         image: "./images/老虎籠.png",
@@ -194,11 +194,11 @@ const eraData = {
     title: "戰後重生與明星動物時代",
     summary:
       "戰後臺北市政府接管圓山動物園，園區逐步恢復開放。動物表演、校外教學與明星動物，使圓山動物園成為許多臺灣兒童的重要記憶。",
-    image: "./images/園區地圖.jpg",
+    image: "./images/map_clear.jpg",
     points: [
       {
         name: "象園區",
-        coord: [395, 1010],
+        coord: [501, 552],
         text:
           "戰後初期園內僅剩獅、象各一。1954 年，林旺進入圓山動物園，與馬蘭成為戰後最具代表性的明星大象。",
         image: "./images/大象.png",
@@ -206,19 +206,11 @@ const eraData = {
       },
       {
         name: "猿園區",
-        coord: [350, 770],
+        coord: [415, 556],
         text:
           "戰後動物表演以猴子為核心，吸引大量兒童與學校團體參觀。",
         image: "./images/大象表演.png",
         imageTitle: "戰後動物表演"
-      },
-      {
-        name: "園區建築",
-        coord: [470, 690],
-        text:
-          "戰火並未嚴重損及動物欄舍，因此戰後建物大多沿襲過去規模。",
-        image: "./images/園區建築.png",
-        imageTitle: "戰後園區建築"
       }
     ],
     cards: [
@@ -272,7 +264,7 @@ const eraData = {
     points: [
       {
         name: "研究與保育區",
-        coord: [520, 690],
+        coord: [91, 438],
         text:
           "1970 年代起，動物園開始優先針對本土瀕危動物進行復育研究，並加入國際組織，引進先進醫療技術。",
         image: "./images/研究資料.png",
@@ -280,7 +272,7 @@ const eraData = {
       },
       {
         name: "企鵝區",
-        coord: [500, 520],
+        coord: [649, 508],
         text:
           "1976 年，臺北市圓山動物園從日本空運一對企鵝來臺，並為其建造當時首個專屬冷氣房與水池。",
         image: "./images/企鵝池.png",
@@ -328,16 +320,8 @@ const eraData = {
     image: "./images/園內導覽圖.jpg",
     points: [
       {
-        name: "告別圓山",
-        coord: [530, 1010],
-        text:
-          "1986 年 8 月 15 日，圓山舊園正式關閉。同年 10 月底，園方舉辦動物搬遷大遊行。",
-        image: "./images/晚期園區.png",
-        imageTitle: "圓山動物園晚期園區"
-      },
-      {
         name: "舊址門口",
-        coord: [500, 1050],
+        coord: [41, 1112],
         text:
           "動物園遷走後，圓山原址後續改建為教育與休閒設施。",
         image: "./images/園區入口.png",
